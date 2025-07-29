@@ -1,0 +1,802 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: loopback_chirp
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 12.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: ID_SDR
+  id: variable
+  parameters:
+    comment: ''
+    value: '"ip:169.254.34.234"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 12.0]
+    rotation: 0
+    state: true
+- name: freq
+  id: variable
+  parameters:
+    comment: ''
+    value: '2400000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 12.0]
+    rotation: 0
+    state: enabled
+- name: lenght_vector_process
+  id: variable
+  parameters:
+    comment: ''
+    value: '256'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 28.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 2**20
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 12.0]
+    rotation: 0
+    state: enabled
+- name: tiempo_integral
+  id: variable
+  parameters:
+    comment: El tiempo de integracion esta en segundos
+    value: '0.1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [568, 92.0]
+    rotation: 0
+    state: enabled
+- name: blocks_complex_to_mag_0
+  id: blocks_complex_to_mag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: lenght_vector_process
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1816, 376.0]
+    rotation: 0
+    state: disabled
+- name: blocks_complex_to_mag_0_0
+  id: blocks_complex_to_mag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: lenght_vector_process
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2504, 504.0]
+    rotation: 0
+    state: enabled
+- name: blocks_integrate_xx_0
+  id: blocks_integrate_xx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: "el parametro decimacion, indica cuantas entradas va a tomar\n para realizar\
+      \ la acumulacion y luego producir una unica salida"
+    decim: int(tiempo_integral*samp_rate/lenght_vector_process)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: lenght_vector_process
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1792, 484.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_conjugate_cc_0
+  id: blocks_multiply_conjugate_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: lenght_vector_process
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1472, 256.0]
+    rotation: 0
+    state: enabled
+- name: blocks_repeat_0
+  id: blocks_repeat
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    interp: '9'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: complex
+    vlen: lenght_vector_process
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2264, 484.0]
+    rotation: 0
+    state: enabled
+- name: blocks_stream_to_vector_0
+  id: blocks_stream_to_vector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: lenght_vector_process
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [936, 216.0]
+    rotation: 0
+    state: enabled
+- name: blocks_stream_to_vector_0_0
+  id: blocks_stream_to_vector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: lenght_vector_process
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [936, 288.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_source_x_0_0
+  id: blocks_vector_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    repeat: 'True'
+    tags: '[]'
+    type: complex
+    vector: '[1.0, 0.9999982468065842, 0.9999719490282958, 0.9998579946528786, 0.999551215926306,
+      0.9989044538903371, 0.9977287209751704, 0.9957935337510887, 0.9928275082145868,
+      0.9885193297732039, 0.9825192290313257, 0.9744411120453355, 0.9638655092122512,
+      0.9503435194858377, 0.9334019350711988, 0.91254973480858, 0.8872861305823831,
+      0.8571103385515829, 0.8215332239061813, 0.7800909322280405, 0.7323605703802927,
+      0.6779779332808464, 0.6166571883022492, 0.5482123251948804, 0.47258005583026225,
+      0.3898437051035512, 0.3002574736202584, 0.20427027742862977, 0.10254818496216722,
+      -0.004005716462074285, -0.1142353734390923, -0.22672125014972055, -0.33977688440682685,
+      -0.4514542378971589, -0.5595595743954677, -0.6616815230972753, -0.755232798323915,
+      -0.8375067318464654, -0.9057493126031176, -0.9572468078424915, -0.9894282538320682,
+      -0.9999811568946576, -0.986977652633938, -0.9490071636835057, -0.8853103223167849,
+      -0.7959076508358318, -0.6817153063513274, -0.5446392025286281, -0.38763814012537257,
+      -0.21474634253921182, -0.03104613719672535, 0.15741742360419347, 0.3437863400375491,
+      0.5206074208853054, 0.6801179338386816, 0.8145945417150223, 0.9167556700493559,
+      0.98020171713856, 0.9998716359447362, 0.9724888344783221, 0.8969645972922216,
+      0.7747239344727002, 0.609917554676996, 0.4094851493914271, 0.18303988795514106,
+      -0.05744769317801341, -0.2981762733598817, -0.5242452941943242, -0.7205678051040615,
+      -0.8729210963351541, -0.9690716062781763, -0.9998923727259534, -0.9603770962781805,
+      -0.8504470504180232, -0.6754478421207798, -0.44624422833601074, -0.1788439292456884,
+      0.1064842964778607, 0.3865884053322071, 0.6372445557719054, 0.8352848253583369,
+      0.9608707426371385, 0.999698524516813, 0.944894552144514, 0.7983552662557868,
+      0.5713095423328588, 0.28393644085776887, -0.03604373563029642, -0.35577686997512387,
+      -0.6405266848097284, -0.8574882325307233, -0.9797675191147917, -0.9900514664048495,
+      -0.8834630181614823, -0.66913120009296, -0.3701123380009624, -0.021474080275468887,
+      0.33341501877114593, 0.6480855444033261, 0.8790936390966169, 0.9922965311707276,
+      0.9683720126427311, 0.8066705224054026, 0.526626193362473, 0.16623682700267145,
+      -0.22247044314366385, -0.5805895573621919, -0.8512184262693191, -0.9887862131683213,
+      -0.967298693764607, -0.7859738434603893, -0.47101356092940916, -0.0727996298363527,
+      0.3414473080484381, 0.698659251600187, 0.9328816930381907, 0.9979468341413251,
+      0.8773944048098223, 0.5894341925892373, 0.1854869781925058, -0.2580163620340067,
+      -0.6535380180357299, -0.9196842095454986, -0.9984740918978074, -0.8689268193318261,
+      -0.5536730409175785, -0.11649717216220831, 0.34945473733588783, 0.7409511253549588,
+      0.9676458261737826, 0.9736852329260876, 0.7526958538648207, 0.3519658903113137,
+      -0.1361272887282213, -0.5943990397767963, -0.9087295565707191, -0.9970453595686403,
+      -0.8320002142420373, -0.45088471951631187, 0.05091392945100424, 0.5424689209815693,
+      0.8910057080782882, 0.9982784269205661, 0.8296257648473939, 0.4268616166343908,
+      -0.09997587968796975, -0.6012391163328701, -0.9297391141057649, -0.9846733479295472,
+      -0.7442078747301109, -0.27583677347459956, 0.28036365459139595, 0.7523031908659962,
+      0.9890499754353389, 0.9103173230336258, 0.535784599682234, -0.01692091800324839,
+      -0.5671367115955227, -0.9294332062851877, -0.9768329951605418, -0.6873153408917616,
+      -0.1560621903766226, 0.43327744330786055, 0.8707374785085378, 0.995180026890941,
+      0.7555606558685097, 0.23449633686293897, -0.37727656715428126, -0.8490333785942069,
+      -0.9972335173307668, -0.7588893017289575, -0.221225927626873, 0.4070373297886628,
+      0.8749017023474475, 0.9896202953185408, 0.6983397942166137, 0.11555681274875859,
+      -0.5185800042230361, -0.9355945823808534, -0.9530514462091001, -0.5571237261447686,
+      0.0849644650660967, 0.6923907462693539, 0.9925033544808847, 0.8447509652101016,
+      0.3099440482501589, -0.3705270124066556, -0.8810285079294863, -0.9781482651716011,
+      -0.6094877222706304, 0.05424990923628927, 0.6944911574288127, 0.9963126121827782,
+      0.8050579906896755, 0.20953768212473575, -0.494547427934387, -0.9488190354970143,
+      -0.9152834557695331, -0.40461672207193816, 0.3210488699421346, 0.8791036353760099,
+      0.9678978263372717, 0.5329609617625546, -0.19502273633252923, -0.8182742873589206,
+      -0.988246120234632, -0.603362907815517, 0.12531528005795037, 0.785031944266848,
+      0.9936449893023314, 0.6236517494742377, -0.11467885207580475, -0.7876676258167185,
+      -0.9912946942128856, -0.5965364268708043, 0.16340290517120387, 0.8255643738751214,
+      0.9777773384814513, 0.5184442267754007, -0.2698789286569914, -0.88907030098354,
+      -0.9392691526101254, -0.38107741827419217, 0.42803442057603647, 0.9578264130275317,
+      0.8528839662400491, 0.1760487425633118, -0.6219945405947046, -0.9988718274703408,
+      -0.6907698739929059, 0.09678863465660156, 0.819294269995994, 0.9673176890418871,
+      0.4292849781860798, -0.4175732758290552, -0.9659245338830051, -0.8137856721702763,
+      -0.06488192617482534, 0.7342265102641088, 0.989225252279012, 0.5028755768000951,
+      -0.3651249372974048, -0.9574986468627734, -0.8164359639601504, -0.0432735033324852,
+      0.7658631708741204, 0.9756784925363803, 0.41381015206709276, -0.47966201604626624,
+      -0.9902331696685692, -0.7006286538089671, 0.16115608501539685, 0.892900775710287,
+      0.887649278806749, 0.14235473842879975, -0.7244804883941369]'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 204.0]
+    rotation: 0
+    state: enabled
+- name: blocks_vector_to_stream_0_0
+  id: blocks_vector_to_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: lenght_vector_process
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1824, 264.0]
+    rotation: 0
+    state: disabled
+- name: blocks_vector_to_stream_0_0_0
+  id: blocks_vector_to_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_items: lenght_vector_process
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1992, 88.0]
+    rotation: 0
+    state: disabled
+- name: fft_vxx_0
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: lenght_vector_process
+    forward: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'False'
+    type: complex
+    window: window.blackmanharris(lenght_vector_process)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1168, 180.0]
+    rotation: 0
+    state: true
+- name: fft_vxx_0_0
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: lenght_vector_process
+    forward: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'False'
+    type: complex
+    window: window.blackmanharris(lenght_vector_process)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1160, 308.0]
+    rotation: 0
+    state: true
+- name: fft_vxx_0_1
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: lenght_vector_process
+    forward: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'False'
+    type: complex
+    window: window.blackmanharris(lenght_vector_process)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1712, 52.0]
+    rotation: 0
+    state: disabled
+- name: fft_vxx_0_1_0
+  id: fft_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    fft_size: lenght_vector_process
+    forward: 'False'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    nthreads: '1'
+    shift: 'True'
+    type: complex
+    window: window.blackmanharris(lenght_vector_process)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1992, 452.0]
+    rotation: 0
+    state: true
+- name: iio_fmcomms2_sink_0
+  id: iio_fmcomms2_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attenuation1: '10.0'
+    attenuation2: '10.0'
+    bandwidth: '20000000'
+    buffer_size: '32768'
+    comment: ''
+    cyclic: 'False'
+    filter: ''
+    filter_source: '''Auto'''
+    fpass: '0'
+    frequency: freq
+    fstop: '0'
+    len_tag_key: ''
+    rf_port_select: '''B'''
+    samplerate: samp_rate
+    tx1_en: 'True'
+    tx2_en: 'False'
+    type: fc32
+    uri: ID_SDR
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 316.0]
+    rotation: 0
+    state: enabled
+- name: iio_fmcomms2_source_0
+  id: iio_fmcomms2_source
+  parameters:
+    affinity: ''
+    alias: ''
+    bandwidth: '20000000'
+    bbdc: 'True'
+    buffer_size: '32768'
+    comment: ''
+    filter: ''
+    filter_source: '''Auto'''
+    fpass: '0'
+    frequency: freq
+    fstop: '0'
+    gain1: '''slow_attack'''
+    gain2: '''slow_attack'''
+    len_tag_key: packet_len
+    manual_gain1: '64'
+    manual_gain2: '64'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    quadrature: 'True'
+    rf_port_select: '''A_BALANCED'''
+    rfdc: 'True'
+    rx1_en: 'True'
+    rx2_en: 'False'
+    samplerate: samp_rate
+    type: fc32
+    uri: ID_SDR
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [632, 268.0]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import numpy as np
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [176, 76.0]
+    rotation: 0
+    state: true
+- name: import_0_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 84.0]
+    rotation: 0
+    state: true
+- name: qtgui_sink_x_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: freq
+    fftsize: '256'
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"RX"'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'False'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 412.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_sink_x_0_0
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: '0'
+    fftsize: lenght_vector_process
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'False'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2192, 52.0]
+    rotation: 0
+    state: disabled
+- name: qtgui_sink_x_0_1
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: '0'
+    fftsize: lenght_vector_process
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'False'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2048, 228.0]
+    rotation: 0
+    state: disabled
+- name: qtgui_sink_x_0_2
+  id: qtgui_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    bw: samp_rate
+    comment: ''
+    fc: freq
+    fftsize: '256'
+    gui_hint: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"TX"'
+    plotconst: 'True'
+    plotfreq: 'True'
+    plottime: 'True'
+    plotwaterfall: 'True'
+    rate: '10'
+    showports: 'False'
+    showrf: 'False'
+    type: complex
+    wintype: window.WIN_BLACKMAN_hARRIS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 124.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_vector_sink_f_0
+  id: qtgui_vector_sink_f
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'True'
+    average: '1.0'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '""'
+    nconnections: '1'
+    ref_level: '0'
+    showports: 'False'
+    update_time: '0.10'
+    vlen: lenght_vector_process
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    x_axis_label: '"x-Axis"'
+    x_start: '0'
+    x_step: '1.0'
+    x_units: '""'
+    y_axis_label: '"y-Axis"'
+    y_units: '""'
+    ymax: '10'
+    ymin: '-140'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2032, 340.0]
+    rotation: 0
+    state: disabled
+- name: qtgui_vector_sink_f_0_0
+  id: qtgui_vector_sink_f
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'True'
+    average: '1.0'
+    color1: '"blue"'
+    color10: '"dark blue"'
+    color2: '"red"'
+    color3: '"green"'
+    color4: '"black"'
+    color5: '"cyan"'
+    color6: '"magenta"'
+    color7: '"yellow"'
+    color8: '"dark red"'
+    color9: '"dark green"'
+    comment: ''
+    grid: 'True'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    name: '"CORRELACION"'
+    nconnections: '1'
+    ref_level: '0'
+    showports: 'False'
+    update_time: '0.10'
+    vlen: lenght_vector_process
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    x_axis_label: '"x-Axis"'
+    x_start: '0'
+    x_step: '1.0'
+    x_units: '""'
+    y_axis_label: '"y-Axis"'
+    y_units: '""'
+    ymax: '10'
+    ymin: '-140'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2720, 468.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_complex_to_mag_0, '0', qtgui_vector_sink_f_0, '0']
+- [blocks_complex_to_mag_0_0, '0', qtgui_vector_sink_f_0_0, '0']
+- [blocks_integrate_xx_0, '0', fft_vxx_0_1_0, '0']
+- [blocks_multiply_conjugate_cc_0, '0', blocks_complex_to_mag_0, '0']
+- [blocks_multiply_conjugate_cc_0, '0', blocks_integrate_xx_0, '0']
+- [blocks_multiply_conjugate_cc_0, '0', blocks_vector_to_stream_0_0, '0']
+- [blocks_multiply_conjugate_cc_0, '0', fft_vxx_0_1, '0']
+- [blocks_repeat_0, '0', blocks_complex_to_mag_0_0, '0']
+- [blocks_stream_to_vector_0, '0', fft_vxx_0, '0']
+- [blocks_stream_to_vector_0_0, '0', fft_vxx_0_0, '0']
+- [blocks_vector_source_x_0_0, '0', blocks_stream_to_vector_0, '0']
+- [blocks_vector_source_x_0_0, '0', iio_fmcomms2_sink_0, '0']
+- [blocks_vector_source_x_0_0, '0', qtgui_sink_x_0_2, '0']
+- [blocks_vector_to_stream_0_0, '0', qtgui_sink_x_0_1, '0']
+- [blocks_vector_to_stream_0_0_0, '0', qtgui_sink_x_0_0, '0']
+- [fft_vxx_0, '0', blocks_multiply_conjugate_cc_0, '0']
+- [fft_vxx_0_0, '0', blocks_multiply_conjugate_cc_0, '1']
+- [fft_vxx_0_1, '0', blocks_vector_to_stream_0_0_0, '0']
+- [fft_vxx_0_1_0, '0', blocks_repeat_0, '0']
+- [iio_fmcomms2_source_0, '0', blocks_stream_to_vector_0_0, '0']
+- [iio_fmcomms2_source_0, '0', qtgui_sink_x_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0
